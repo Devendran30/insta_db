@@ -1,10 +1,13 @@
-import mysql from "mysql2/promise"; // Mistake fixed: Use promise-based wrapper
+import mysql from "mysql2/promise";
 
-const db = mysql.createPool({       // Mistake fixed: Use createPool for Next.js
-  host: "localhost",
-  user: "root",
-  password: "03072002",
-  database: "instagram_db",
+const db = mysql.createPool({
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "03072002",
+  database: process.env.DB_NAME || "instagram_db",
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-export default db;                  // Mistake fixed: Use ES6 export
+export default db;
