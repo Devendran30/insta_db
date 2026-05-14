@@ -7,7 +7,6 @@ export async function GET() {
     const [rows] = await db.query("SELECT * FROM instagram_links ORDER BY id DESC");
     return NextResponse.json(rows);
   } catch (error: any) {
-    // THIS is the magic line that reveals the real error
     return NextResponse.json({ 
       error: "Database GET Error", 
       details: error.message 
@@ -25,7 +24,6 @@ export async function POST(req: Request) {
     );
     return NextResponse.json({ id: result.insertId, message: "Link added" });
   } catch (error: any) {
-    // THIS is the magic line that reveals the real error
     return NextResponse.json({ 
       error: "Database POST Error", 
       details: error.message 
