@@ -47,7 +47,6 @@ export default function AdminInstagramLinks() {
   const fetchLinks = async () => {
     setLoading(true);
     try {
-      // MISTAKE FIXED: Use relative path to Next.js API, not port 5000
       const res = await fetch("/api/links");
       const data = await res.json();
       setLinks(Array.isArray(data) ? data : []);
@@ -67,7 +66,6 @@ export default function AdminInstagramLinks() {
 
     try {
       if (editId !== null) {
-        // MISTAKE FIXED: Point to your new Next.js API route
         await fetch(`/api/links/${editId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -75,7 +73,6 @@ export default function AdminInstagramLinks() {
         });
         toast.success("Updated");
       } else {
-        // MISTAKE FIXED: Point to your new Next.js API route
         await fetch("/api/links", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -94,12 +91,12 @@ export default function AdminInstagramLinks() {
   const handleEdit = (link: InstagramLink) => {
     setEditId(link.id);
     setUrl(link.url);
-    setPublished(Boolean(link.published)); // Mistake fix: Ensure it's a boolean for the toggle
+    setPublished(Boolean(link.published)); 
     setIsModalOpen(true);
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm("Are you sure?")) return; // Added safety check
+    if (!confirm("Are you sure?")) return; 
     try {
       await fetch(`/api/links/${id}`, {
         method: "DELETE",
@@ -120,8 +117,19 @@ export default function AdminInstagramLinks() {
 
   return (
     <div className="p-6 md:p-10 min-h-screen bg-gray-50 space-y-8 text-black"> 
-      {/* Added text-black because default Tailwind v4 might inherit dark mode */}
       <Toaster position="top-right" />
+
+      {/* --- DEPLOYMENT TEST BOX --- */}
+      <div className="bg-yellow-300 p-6 rounded-xl shadow-lg my-6 border-4 border-yellow-500 text-center">
+        <h2 className="text-2xl font-black text-black mb-2">🚀 DEPLOYMENT TEST SUCCESSFUL 🚀</h2>
+        <p className="text-black mb-4">If you can see this box and type in it, the server is reading the new code!</p>
+        <input 
+          type="text" 
+          placeholder="Type a test message here..." 
+          className="w-full p-3 border-2 border-black rounded-lg text-black font-bold focus:outline-none focus:ring-4 focus:ring-yellow-500"
+        />
+      </div>
+      {/* --------------------------- */}
 
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold flex items-center gap-2 text-orange-600">
